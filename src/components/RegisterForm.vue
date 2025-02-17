@@ -12,7 +12,14 @@
           type="password" required></v-text-field>
 
         <v-btn type="submit" :disabled="!isValid" class="mt-2" color="primary" block>
-          Registrarse
+          <v-container v-if="isloading">
+            <v-progress-circular indeterminate color="white"></v-progress-circular>
+          </v-container>
+          <v-container v-else>
+            <div>
+              Registrarse
+            </div>
+          </v-container>
         </v-btn>
       </v-card-text>
     </v-col>
@@ -28,7 +35,8 @@ export default {
   name: "RegisterForm",
   data() {
     return {
-      isValid: true, 
+      isValid: true,
+      isloading: false,
       user: {
         name: '',
         email: '',
@@ -48,25 +56,23 @@ export default {
   methods: {
     submitFormRegister() {
       if (this.$refs.form.validate()) {
+        this.isloading = true;
         this.$emit('registerUser', {
           name: this.user.name,
           email: this.user.email,
           password: this.user.password,
+          isloadong: this.isloading,
         });
       }
-    },
-    navigateToLogin() {
-      this.$router.push('/login');
     },
   },
 };
 </script>
 
-<style >
+<style>
 .login-link {
   color: #1976d2;
   text-decoration: none;
   font-weight: bold;
 }
-
 </style>

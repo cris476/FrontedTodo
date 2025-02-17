@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-form ref="form" v-model="isValid" lazy-validation>
+        <v-form ref="form" lazy-validation @submit.prevent="submitFormLogin">
             <h2>Welcome</h2>
             <v-card-text>
                 <v-text-field v-model="user.email" :rules="[rules.required, rules.email]" label="Correo Electrónico"
@@ -9,13 +9,21 @@
                 <v-text-field v-model="user.password" :rules="[rules.required, rules.min(6)]" label="Contraseña"
                     type="password" required outlined></v-text-field>
 
-                <v-btn @click="submit" :disabled="!isValid" class="mt-2" color="primary" block>
-                    Login
+
+                <v-btn type="submit" :disabled="!isValid" class="mt-2" color="primary" block>
+                    <v-container v-if="isloading">
+                        <v-progress-circular indeterminate color="white"></v-progress-circular>
+                    </v-container>
+                    <v-container v-else>
+                        <div>
+                            login
+                        </div>
+                    </v-container>
                 </v-btn>
             </v-card-text>
 
             <v-card-actions class="justify-center">
-                <router-link to="/register" class="login-link">
+                <router-link to="/register" class="styled-link">
                     ¿No tienes una cuenta?
                 </router-link>
             </v-card-actions>
@@ -27,11 +35,12 @@
 export default {
     data() {
         return {
-            isValid: true,
+            isloading: false,
             user: {
                 email: "",
                 password: "",
             },
+            isValid: true,
             rules: {
                 required: (value) => !!value || "Este campo es obligatorio",
                 email: (value) => {
@@ -44,9 +53,15 @@ export default {
         };
     },
     methods: {
-        submit() {
-            if (this.$refs.form.validate()) {
-                console.log("Datos enviados:", this.user);
+        submitFormLogin() {
+            const isFormValid = this.$refs.form.validate();
+
+            if (isFormValid) {
+                this.isloading = true;
+                this.$emit("login", {
+                    email: this.user.email,
+                    password: this.user.password
+                });
             }
         },
     },
