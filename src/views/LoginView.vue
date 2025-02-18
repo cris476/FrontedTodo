@@ -42,6 +42,7 @@ export default {
                 const response = await login(loginData);
                 if (response && response.data.validation) {
                     localStorage.setItem("token", response.data.access_token)
+                    this.$root.$emit("loginSuccess");
                     this.$router.push('/todoView');
                 }
             } catch (error) {
