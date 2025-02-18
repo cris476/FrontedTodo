@@ -6,7 +6,7 @@
                 <v-text-field v-model="user.email" :rules="[rules.required, rules.email]" label="Correo Electrónico"
                     required outlined></v-text-field>
 
-                <v-text-field v-model="user.password" :rules="[rules.required, rules.min(6)]" label="Contraseña"
+                <v-text-field v-model="user.password" :rules="[rules.required, rules.min(8)]" label="Contraseña"
                     type="password" required outlined></v-text-field>
 
 
@@ -33,9 +33,21 @@
 
 <script>
 export default {
+    name: "LoginForm",
+    props: {
+        isloading: {
+            typeof: Boolean,
+            default: false,
+        },
+    },
+    watch: {
+        isloading(newValue) {
+            this.localIsloading = newValue
+        },
+    },
     data() {
         return {
-            isloading: false,
+            localIsloading: this.isloading,
             user: {
                 email: "",
                 password: "",
@@ -55,9 +67,8 @@ export default {
     methods: {
         submitFormLogin() {
             const isFormValid = this.$refs.form.validate();
-
             if (isFormValid) {
-                this.isloading = true;
+                this.localIsloading = true;
                 this.$emit("login", {
                     email: this.user.email,
                     password: this.user.password

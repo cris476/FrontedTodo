@@ -12,9 +12,7 @@
           type="password" required></v-text-field>
 
         <v-btn type="submit" :disabled="!isValid" class="mt-2" color="primary" block>
-          <v-container v-if="isloading">
-            <v-progress-circular indeterminate color="white"></v-progress-circular>
-          </v-container>
+          <v-progress-circular v-if="isloading" indeterminate color="white"></v-progress-circular>
           <v-container v-else>
             <div>
               Registrarse
@@ -23,7 +21,6 @@
         </v-btn>
       </v-card-text>
     </v-col>
-
     <v-card-actions class="justify-center">
       <router-link to="/login" class="login-link"> ¿Tienes una cuenta existente? </router-link>
     </v-card-actions>
@@ -33,10 +30,16 @@
 <script>
 export default {
   name: "RegisterForm",
+  props: {
+    isloading: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       isValid: true,
-      isloading: false,
+      localIsloading: this.isloading,
       user: {
         name: '',
         email: '',
@@ -53,15 +56,19 @@ export default {
       },
     };
   },
+  watch: {
+    isLoading(newValue) {
+      this.localIsloading = newValue;
+    }
+  },
   methods: {
     submitFormRegister() {
       if (this.$refs.form.validate()) {
-        this.isloading = true;
+        this.localIsloading = true;
         this.$emit('registerUser', {
           name: this.user.name,
           email: this.user.email,
           password: this.user.password,
-          isloadong: this.isloading,
         });
       }
     },
