@@ -43,7 +43,10 @@
 
 
 export default {
+
+     // Define las propiedades que recibe el componente
     props: {
+        
         id: {
             type: Number,
             required: true
@@ -57,6 +60,7 @@ export default {
             required: true
         }
     },
+    // Define los datos del componente
     data() {
         return {
             edit: true,
@@ -65,9 +69,11 @@ export default {
         };
     },
     methods: {
+        //cambia el estado de la tarea a edit
         editTask() {
             this.edit = false;
         },
+        //actualiza la tarea
         confirmEdit() {
             this.$emit("updateTask", {
                 id: this.id,
@@ -76,11 +82,13 @@ export default {
             });
             this.edit = true;
         },
+        //cancela la edicion
         cancelEdit() {
             this.localTitle = this.title;
             this.localDescription = this.description;
             this.edit = true;
         },
+        //elimina la tarea 
         deleteTask() {
             this.$emit("deleteTask", {
                 id: this.id

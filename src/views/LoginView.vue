@@ -28,6 +28,7 @@ export default {
     },
 
     data() {
+         // Define las propiedades que recibe el componente
         return {
             isloading: false,
             showError: false,
@@ -35,6 +36,7 @@ export default {
         }
     },
     methods: {
+        //metodo para hacer login en la aplicacion
         async loginView(loginData) {
 
             try {
@@ -54,6 +56,7 @@ export default {
                 }
             }
         },
+        //metodo para mostrar mensaje de error
         showErrorMessage(message) {
             this.errorMessage = message;
             this.showError = true;

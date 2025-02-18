@@ -5,7 +5,7 @@ import LoginView from "@/views/LoginView.vue";
 import RegisterView from "@/views/RegisterView.vue";
 
 Vue.use(VueRouter);
-
+// Definimos las rutas de la aplicación
 const router = new VueRouter({
   mode: "history", 
   routes: [

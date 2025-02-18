@@ -67,7 +67,7 @@ export default {
         Task,
         TodoForm
     },
-
+    // Define las propiedades que recibe el componente
     data() {
         return {
             showError: false,
@@ -77,6 +77,7 @@ export default {
             updateTaskLocal: false
         };
     },
+    //metodo para obtener todas las tareas
     async mounted() {
 
         try {
@@ -88,6 +89,8 @@ export default {
 
     },
     methods: {
+
+        //metodo para agregar una tarea nueva a la lista de tareas  
         async addTask(notaNew) {
 
             try {
@@ -103,6 +106,7 @@ export default {
             }
 
         },
+        // metodo para obtener una frase de la api quotable
         async getPhraseTodo() {
             try {
                 const response = await getPhrase();
@@ -113,7 +117,7 @@ export default {
                 this.handleError(error);
             }
         },
-
+        //metodo para actualizar una tarea
         async updateTask(taskUpdate) {
             try {
                 const response = await updateTask(taskUpdate.id, {
@@ -129,7 +133,7 @@ export default {
                 this.handleError(error);
             }
         },
-
+     // metodo para eliminar una tarea
         async deleteTask(taskDelete) {
             try {
                 await deleteTask(taskDelete.id);
@@ -139,6 +143,8 @@ export default {
                 this.handleError(error);
             }
         },
+
+        // metodo para mostrar mensaje de error
         handleError(error) {
             this.isLoading = false;
             if (error.response.data) {
@@ -147,6 +153,7 @@ export default {
                 this.showErrorMessage("Error desconocido. Inténtalo más tarde.");
             }
         },
+        // metodo para mostrar mensaje de error
         showErrorMessage(message) {
             this.errorMessage = message;
             this.showError = true;

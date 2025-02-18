@@ -30,21 +30,24 @@
 <script>
 export default {
   name: "RegisterForm",
+  // Recibe `isloading` como prop desde el componente padre
   props: {
     isloading: {
-      type: Boolean,
-      default: false,
+      type: Boolean, // Define el tipo de la prop como booleano
+      default: false, // Valor por defecto en caso de que el padre no lo pase
     },
   },
   data() {
     return {
-      isValid: true,
-      localIsloading: this.isloading,
+      isValid: true, // Estado que controla si el formulario es válido
+      localIsloading: this.isloading, // Variable local para manejar el estado de carga
+      // Datos del usuario a registrar
       user: {
         name: '',
         email: '',
         password: '',
       },
+      // Reglas de validación para los campos del formulario
       rules: {
         required: (value) => !!value || 'Este campo es obligatorio',
         email: (value) => {
@@ -57,11 +60,16 @@ export default {
     };
   },
   watch: {
+    // Observa cambios en `isloading` y actualiza la variable local `localIsloading`
     isLoading(newValue) {
       this.localIsloading = newValue;
     }
   },
   methods: {
+     /**
+     * Valida el formulario y emite un evento con los datos del usuario.
+     * Activa el estado de carga mientras se procesa el registro.
+     */
     submitFormRegister() {
       if (this.$refs.form.validate()) {
         this.localIsloading = true;

@@ -26,6 +26,7 @@ import { logout } from './Service/authService';
 
 export default {
   name: 'App',
+  // Define las propiedades que recibe el componente
   data() {
     return {
       errorMessage: "",
@@ -33,21 +34,26 @@ export default {
       isLoggedIn: false,
     };
   },
+  // Define los datos del componente
   created() {
+    // Verifica si el usuario está autenticado
     this.$root.$on("loginSuccess", () => {
       this.checkAuth();
     });
   },
   methods: {
+    // Verifica si el usuario está autenticado
     checkAuth() {
       this.isLoggedIn = !!localStorage.getItem("token");
     },
+    // Cierra la sesión del usuario
     async logout() {
 
       try {
         const response = await logout();
 
         if (response && response.data) {
+          // Elimina el token del local storage
           localStorage.removeItem("token");
           this.isLoggedIn = false;
           this.$router.push('/login');
@@ -58,9 +64,11 @@ export default {
         }
       }
     },
+    // Redirige al usuario a la página de login
     login() {
       this.$router.push('/login');
     },
+    // Muestra un mensaje de error
     showErrorMessage(message) {
       this.errorMessage = message;
       this.showError = true;

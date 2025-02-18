@@ -28,8 +28,9 @@ export default {
         }
     },
     methods: {
+         
+        //metodo para hacer registro en la aplicacion
         async registerView(registerUser) {
-
             try {
                 const response = await register(registerUser);
                 if (response && response.data.validation) {
@@ -45,6 +46,7 @@ export default {
                 }
             }
         },
+        //metodo para mostrar mensaje de error
         showErrorMessage(message) {
             this.errorMessage = message;
             this.showError = true;

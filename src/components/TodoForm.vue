@@ -12,12 +12,14 @@
 <script>
 export default {
     data() {
+        // Inicializa los datos del formulario
         return {
             title: "",
             description: ""
         };
     },
     methods: {
+        // Método para enviar la tarea al componente padre
         submitTask() {
             if (this.title.trim() && this.description.trim()) {
                 this.$emit("newNota", {

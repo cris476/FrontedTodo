@@ -34,12 +34,15 @@
 <script>
 export default {
     name: "LoginForm",
+    // Definición de las propiedades recibidas desde el componente padre
     props: {
+        // Validación del formulario
         isloading: {
             typeof: Boolean,
             default: false,
         },
     },
+    // Observador para actualizar `localIsloading` cuando `isloading` cambie
     watch: {
         isloading(newValue) {
             this.localIsloading = newValue
@@ -53,6 +56,7 @@ export default {
                 password: "",
             },
             isValid: true,
+            // Reglas de validación de los campos
             rules: {
                 required: (value) => !!value || "Este campo es obligatorio",
                 email: (value) => {
@@ -65,6 +69,10 @@ export default {
         };
     },
     methods: {
+         /**
+         * Envía el formulario de login si es válido.
+         * Emite un evento con los datos del usuario al componente padre.
+         */
         submitFormLogin() {
             const isFormValid = this.$refs.form.validate();
             if (isFormValid) {
