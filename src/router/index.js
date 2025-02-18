@@ -7,8 +7,13 @@ import RegisterView from "@/views/RegisterView.vue";
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-  mode: "history", // Usa 'history' para URLs sin #
+  mode: "history", 
   routes: [
+    {
+      path: "/",
+      name: "register",
+      component: RegisterView,
+    },
     {
       path: "/register",
       name: "register",
